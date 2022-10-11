@@ -85,7 +85,6 @@ public class TestScope {
 
     @Test
     public void testScopeThreadPoolExecutor() {
-        ExecutorService executor = ScopeThreadPoolExecutor.newFixedThreadPool(10);
         ScopeKey<String> localVariable = new ScopeKey<>();
         Scope.beginScope();
 
@@ -94,6 +93,7 @@ public class TestScope {
             Runnable r = () -> log.info("localVariable in thread pool: {}", localVariable.get());
 
             // 使用线程池执行，能获取到外部Scope中的数据
+            ExecutorService executor = ScopeThreadPoolExecutor.newFixedThreadPool(10);
             executor.execute(r);
             executor.submit(r);
 
@@ -109,13 +109,13 @@ public class TestScope {
 
     @Test
     public void testScopeThreadPoolExecutor2() {
-        ExecutorService executor = ScopeThreadPoolExecutor.newFixedThreadPool(10);
         ScopeKey<String> localVariable = new ScopeKey<>();
         Scope.runWithNewScope(() -> {
             localVariable.set("value out of thread pool");
             Runnable r = () -> log.info("localVariable in thread pool: {}", localVariable.get());
 
             // 使用线程池执行，能获取到外部Scope中的数据
+            ExecutorService executor = ScopeThreadPoolExecutor.newFixedThreadPool(10);
             executor.execute(r);
             executor.submit(r);
         });

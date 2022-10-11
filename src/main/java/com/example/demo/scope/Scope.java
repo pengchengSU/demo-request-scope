@@ -6,10 +6,10 @@ import java.util.concurrent.ConcurrentMap;
 
 public class Scope {
 
-    // 维护不同线程的上下文Scope
+    // 静态变量，维护不同线程的上下文Scope
     private static final ThreadLocal<Scope> SCOPE_THREAD_LOCAL = new ThreadLocal<>();
 
-    // 维护每个上下文中所有的状态数据，为了区分不同的状态数据，使用ScopeKey类型的实例作为key
+    // 实例变量，维护每个上下文中所有的状态数据，为了区分不同的状态数据，使用ScopeKey类型的实例作为key
     private final ConcurrentMap<ScopeKey<?>, Object> values = new ConcurrentHashMap<>();
 
     // 获取当前上下文
